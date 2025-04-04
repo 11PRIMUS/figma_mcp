@@ -3,6 +3,10 @@ import os
 import json
 from dotenv import load_dotenv
 import requests
+import sys
+import argparse
+from pathlib import Path
+
 
 load_dotenv()
 FIGMA_API_TOKEN=os.getenv("FIGMA_API_TOKEN")
@@ -40,6 +44,15 @@ def get_node(file_key:str,node_id:str)->dict:
         return {"error":response["error"]}
     
     return response
+
+def get_node_data(file_key:str,node_id:str)->dict:
+    node=get_node(file_key,node_id)
+    if "error" in node:
+        return {"error":node["error"]}
+    
+    return node["data"]["nodes"][node_id]
+
+
 
 
 
